@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Roll20 · Key Stakeholders & Power Map · Datadog APQ §3</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--p:#632CA6;--p2:#7B3FC4;--p3:#A77BE0;--pl:#F1EAFB;--ink:#1D1530;--mut:#6B6380;--line:#E4DCF1;--bg:#FAF8FD;
+--EB:#C98A00;--TDM:#632CA6;--CH:#16A57A;--INF:#2F6FDB;--EU:#7A8194;--BR:#D6453D;}
+*{box-sizing:border-box}html,body{margin:0}body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif;color:var(--ink);background:var(--bg);font-size:13px}
+a{color:var(--p)}
+header{background:linear-gradient(115deg,#3D1670 0%,#632CA6 55%,#8A4FD1 100%);color:#fff;padding:16px 28px 14px;position:relative;overflow:hidden}
+header:after{content:"";position:absolute;right:-80px;top:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.14),transparent 65%)}
+.hrow{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;position:relative;z-index:1}
+.eyebrow{font-size:11px;letter-spacing:.14em;text-transform:uppercase;opacity:.8;font-weight:600}
+h1{margin:3px 0 2px;font-size:26px;font-weight:800;letter-spacing:-.01em}
+.sub{opacity:.88;font-size:13px;max-width:900px}
+.kpis{display:flex;gap:10px}
+.kpi{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:12px;padding:8px 14px;min-width:108px}
+.kpi b{display:block;font-size:22px;font-weight:800;line-height:1.1}.kpi span{font-size:10.5px;opacity:.85;text-transform:uppercase;letter-spacing:.06em}
+.bar{display:flex;align-items:center;gap:18px;padding:9px 28px;background:#fff;border-bottom:1px solid var(--line);flex-wrap:wrap;position:sticky;top:0;z-index:20}
+.bar .grp{display:flex;align-items:center;gap:6px;flex-wrap:wrap}.bar .lab{font-size:10.5px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;margin-right:2px}
+.chip{border:1px solid var(--line);background:#fff;border-radius:999px;padding:4px 10px;font-size:11.5px;font-weight:600;cursor:pointer;display:inline-flex;align-items:center;gap:6px;color:var(--ink);transition:.15s}
+.chip:hover{border-color:var(--p3)}.chip.on{background:var(--p);color:#fff;border-color:var(--p)}
+.dot{width:9px;height:9px;border-radius:50%;display:inline-block}
+.chip.reset{color:var(--mut)}
+.stage{position:relative;padding:8px 28px 6px}
+.grid{display:grid;grid-template-columns:118px minmax(0,6.2fr) minmax(0,1.45fr) minmax(0,1.45fr);gap:0 14px;position:relative;z-index:2}
+.lanehead{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.1em;color:var(--p);padding:6px 10px;border-radius:10px 10px 0 0;background:var(--pl);display:flex;justify-content:space-between;align-items:center}
+.lanehead small{font-weight:600;color:var(--mut);text-transform:none;letter-spacing:0}
+.tierlab{font-size:10.5px;font-weight:700;color:var(--mut);text-transform:uppercase;letter-spacing:.08em;display:flex;align-items:center;border-top:1px dashed var(--line);padding-right:6px}
+.cell{display:flex;gap:12px;justify-content:center;align-items:center;padding:12px 6px;border-top:1px dashed var(--line);background:linear-gradient(#fff0,#fff0);min-height:150px;flex-wrap:nowrap}
+.cell.l1,.cell.l2{background:rgba(241,234,251,.35)}
+.card{width:148px;height:132px;perspective:900px;cursor:pointer;flex:0 0 auto;transition:opacity .2s, transform .2s}
+.card .face{width:100%;height:100%;border-radius:14px;background:#fff;border:1px solid var(--line);box-shadow:0 2px 6px rgba(60,20,110,.06);padding:10px 10px 8px;position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;transition:transform .45s cubic-bezier(.3,.7,.3,1),box-shadow .2s}
+.card:hover .face{transform:rotateY(14deg) translateY(-2px);box-shadow:0 10px 24px rgba(60,20,110,.16)}
+.card .rtop{position:absolute;left:0;right:0;top:0;height:4px;border-radius:14px 14px 0 0}
+.av{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:14px;margin-top:4px;box-shadow:0 0 0 3px #fff,0 0 0 4px var(--line)}
+.nm{font-weight:700;font-size:12.5px;margin-top:6px;line-height:1.15;max-height:30px;overflow:hidden}
+.tt{font-size:10.3px;color:var(--mut);line-height:1.2;margin-top:2px;max-height:25px;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical}
+.tags{position:absolute;bottom:7px;left:0;right:0;display:flex;gap:4px;justify-content:center}
+.tag{font-size:9.5px;font-weight:700;color:#fff;border-radius:999px;padding:2px 7px;letter-spacing:.02em}
+.vb{position:absolute;top:7px;right:8px;font-size:10px;font-weight:800;width:18px;height:18px;border-radius:50%;display:flex;align-items:center;justify-content:center}
+.vV{background:#DDF5EC;color:#0F8A63}.vP{background:#FFF1CC;color:#9A6A00}.vL{background:#EEF0F4;color:#59607A}.vD{background:#F3E1E0;color:#A33B35}
+.card.dep .face{background:repeating-linear-gradient(135deg,#fff,#fff 8px,#F7F5FA 8px,#F7F5FA 16px);opacity:.85}
+.card.dim{opacity:.16;filter:grayscale(.8)}
+.card.hit .face{box-shadow:0 0 0 3px var(--p3),0 10px 24px rgba(99,44,166,.25)}
+svg#wires{position:absolute;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
+svg#wires path{fill:none;stroke:#C9B6E6;stroke-width:1.6}
+svg#wires path.x{stroke-dasharray:4 4;stroke:#CDBFE0}
+svg#wires path.dim{opacity:.12}svg#wires path.hl{stroke:var(--p);stroke-width:2.4;opacity:1}
+.legend{display:flex;gap:18px;align-items:center;padding:4px 28px 10px;color:var(--mut);font-size:11px;flex-wrap:wrap}
+.legend b{color:var(--ink)}
+.lg{display:inline-flex;align-items:center;gap:6px}
+.ln{display:inline-block;width:26px;border-top:2px solid #C9B6E6}.ln.x{border-top:2px dashed #C9B6E6}
+/* overlay flip */
+#ov{position:fixed;inset:0;background:rgba(29,21,48,.55);backdrop-filter:blur(3px);z-index:50;display:none;align-items:center;justify-content:center}
+#ov.show{display:flex}
+.big{width:min(1340px,94vw);height:min(900px,90vh);perspective:2200px}
+.flip{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .75s cubic-bezier(.4,.2,.2,1)}
+.flip.f{transform:rotateY(180deg)}
+.side{position:absolute;inset:0;backface-visibility:hidden;border-radius:22px;background:#fff;box-shadow:0 30px 80px rgba(20,8,40,.45);overflow:hidden}
+.side.front{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px}
+.side.front .av{width:120px;height:120px;font-size:42px}
+.side.back{transform:rotateY(180deg);display:flex;flex-direction:column}
+.bh{padding:18px 26px 14px;color:#fff;display:flex;align-items:center;gap:16px}
+.bh .av{width:52px;height:52px;font-size:19px;box-shadow:0 0 0 3px rgba(255,255,255,.5)}
+.bh h2{margin:0;font-size:22px;font-weight:800}.bh .t2{opacity:.9;font-size:13px}
+.bh .sp{flex:1}
+.btn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--p);font-weight:700;border-radius:999px;padding:7px 14px;text-decoration:none;font-size:12px;border:0;cursor:pointer}
+.btn.ghost{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.4)}
+.bb{flex:1;display:grid;grid-template-columns:1.15fr 1fr 1.05fr;gap:16px;padding:16px 22px 18px;overflow:auto}
+.box{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px}
+.box h4{margin:0 0 6px;font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--p);font-weight:800}
+.box p{margin:0;line-height:1.5;font-size:12.8px}
+.quote{background:linear-gradient(135deg,#F1EAFB,#fff);border-left:4px solid var(--p);font-style:italic}
+.obj{background:#FFF5F4;border-color:#F5D3D0}.obj h4{color:var(--BR)}
+.pchips{display:flex;flex-wrap:wrap;gap:6px}
+.pc{background:#fff;border:1px solid var(--p3);color:var(--p);border-radius:8px;padding:4px 8px;font-size:11.5px;font-weight:700}
+ul.posts,ul.srcs{list-style:none;margin:0;padding:0}
+ul.posts li{padding:7px 0;border-bottom:1px dashed var(--line);font-size:12.2px;line-height:1.4}
+ul.posts li:last-child{border:0}
+.dt{display:inline-block;font-weight:800;color:var(--p);font-size:11px;min-width:76px}
+ul.srcs li{font-size:11.5px;padding:3px 0;line-height:1.35}
+.conf{display:inline-block;font-weight:800;padding:2px 8px;border-radius:6px;font-size:11px}
+.cH{background:#DDF5EC;color:#0F8A63}.cM{background:#FFF1CC;color:#9A6A00}.cL{background:#EEF0F4;color:#59607A}
+.close{position:absolute;top:14px;right:16px;z-index:5}
+.hint{color:var(--mut);font-size:12px}
+/* sections */
+section{padding:18px 28px}
+h3{font-size:17px;margin:0 0 10px;font-weight:800}
+h3 .n{display:inline-flex;width:24px;height:24px;border-radius:50%;background:var(--p);color:#fff;font-size:12px;align-items:center;justify-content:center;margin-right:8px;vertical-align:2px}
+.path{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+.step{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px;position:relative}
+.step .k{font-size:10.5px;font-weight:800;color:var(--p);text-transform:uppercase;letter-spacing:.1em}
+.step h5{margin:4px 0 6px;font-size:14px}
+.step p{margin:0;font-size:12.2px;line-height:1.45;color:#3a3150}
+.step .who{margin-top:8px;display:flex;gap:4px;flex-wrap:wrap}
+.step .who span{background:var(--pl);color:var(--p);font-weight:700;font-size:11px;border-radius:999px;padding:2px 8px;cursor:pointer}
+.step:not(:last-child):after{content:"➜";position:absolute;right:-12px;top:44%;color:var(--p3);font-size:14px}
+.two{display:grid;grid-template-columns:1.2fr 1fr;gap:16px}
+.panel{background:#fff;border:1px solid var(--line);border-radius:16px;padding:14px 16px}
+.panel ul{margin:6px 0 0;padding-left:18px;line-height:1.55}
+table.mx{width:100%;border-collapse:collapse;font-size:12px}
+table.mx th,table.mx td{border-bottom:1px solid var(--line);padding:5px 6px;text-align:left}
+table.mx th{font-size:10.5px;text-transform:uppercase;color:var(--mut);letter-spacing:.06em}
+footer{padding:14px 28px 28px;color:var(--mut);font-size:11.2px;line-height:1.55;border-top:1px solid var(--line);background:#fff}
+footer .cols{columns:3;column-gap:28px}
+footer a{color:var(--p)}
+.mini{font-size:11px;color:var(--mut)}
+</style></head>
+<body>
+<header><div class="hrow"><div>
+<h1>Key Stakeholders &amp; Power Map</h1>
+</div><div class="kpis" id="kpis"></div></div></header>
+<div class="bar">
+ <div class="grp"><span class="lab">Deal role</span><span id="roleChips"></span></div>
+ <div class="grp"><span class="lab">Datadog product</span><span id="prodChips"></span></div>
+ <div class="grp"><span class="chip" id="vonly">✓ Verified only</span><span class="chip reset" id="reset">Reset</span></div>
+</div>
+<div class="stage" id="stage"><svg id="wires"></svg><div class="grid" id="grid"></div></div>
+<div class="legend" id="legend"></div>
+
+<section><h3><span class="n">1</span>Recommended entry path</h3><div class="path" id="path"></div></section>
+<section style="padding-top:4px"><div class="two">
+ <div class="panel"><h3 style="font-size:15px">Power vs. support matrix (my read)</h3><table class="mx" id="mx"></table></div>
+ <div class="panel"><h3 style="font-size:15px">Why this map is credible</h3><ul>
+  <li><b>Roster first:</b> the org chart comes from a public LinkedIn sweep of Roll20 employees (82 of 113 profiles). I then <b>verified</b> people against Roll20 blog bylines (WordPress author API), forum and Reddit staff posts, Demiplane posts and press releases.</li>
+  <li><b>Verification badges:</b> <span class="vb vV" style="position:static;display:inline-flex">✓</span> named with role in an official source, 2025–26 · <span class="vb vP" style="position:static;display:inline-flex">◐</span> official source confirms the person, title from LinkedIn or an older source · <span class="vb vL" style="position:static;display:inline-flex">in</span> LinkedIn sweep only · <span class="vb vD" style="position:static;display:inline-flex">×</span> departed.</li>
+  <li><b>Reporting lines are inferred</b> from titles and public statements; Roll20 publishes no org chart. Lanes marked “inferred” (DriveThruRPG engineers) rest on stack-skill matches.</li>
+  <li><b>Signals that matter:</b> the only Datadog-skilled employee (Hales Rymel) is the internal coach. The infra owner (Sydney) has publicly warned vendors off cold invites, so enter top-down via the CTO. Demiplane lost its CTO co-founder in Jan 2026.</li>
+  <li>No ZoomInfo or Crustdata used. Nobody contacted. Only LinkedIn URLs found in sources are linked.</li></ul></div>
+</div></section>
+<section style="padding-top:4px"><div class="panel"><h3 style="font-size:15px">Also mapped (low deal relevance or unverified)</h3><div id="also" class="mini" style="columns:3;column-gap:24px;line-height:1.6"></div></div></section>
+<footer><b style="color:var(--ink)">Evidence</b> (all public; accessed Oct 17–18, 2026 ET). <div class="cols" id="ev"></div>
+<p>Compiled for Marlon Belden’s Datadog Commercial AE APQ. Dates are as published. Quotes are verbatim from linked sources. “[inference]” marks my analysis rather than a sourced fact.</p></footer>
+
+<div id="ov"><div class="big"><div class="flip" id="flip">
+ <div class="side front" id="fFront"></div><div class="side back" id="fBack"></div>
+</div></div></div>
+
+<script>
+const SRC = {
+ cto_note:{u:"https://app.roll20.net/forum/post/12661502/a-note-from-the-cto-mike-todd-stability-accountability-and-our-path-forward",t:"Roll20 forum · CTO Mike Todd, “Stability, Accountability, and Our Path Forward” (Jan 31, 2026)"},
+ perf_apr:{u:"https://blog.roll20.net/posts/ongoing-performance-updates/",t:"Roll20 blog · Mike Todd, “Ongoing Performance Updates” (Apr 8, 2026)"},
+ reddit_may:{u:"https://www.reddit.com/r/Roll20/comments/1tivq43/why_did_the_servers_go_down/",t:"Reddit r/Roll20 · u/Roll20Mike on the May 20, 2026 outage"},
+ reddit_may6:{u:"https://www.reddit.com/r/Roll20/comments/1t54h00/why_is_roll20_acting_out_all_of_a_sudden/",t:"Reddit r/Roll20 · u/Kentonh, Product team reply (May 6, 2026)"},
+ jeff_10x:{u:"https://blog.roll20.net/posts/10x-vtt-performance-update/",t:"Roll20 blog · Jeff Lamb, “How we 10x’d VTT Performance” (Jan 20, 2026)"},
+ vtt_apr:{u:"https://blog.roll20.net/posts/vtt-performance-april2026/",t:"Roll20 blog · Lavi (PM, VTT), “VTT Performance: What We’ve Fixed” (Apr 23, 2026)"},
+ dean_jul:{u:"https://blog.roll20.net/posts/performance-update-july-2026/",t:"Roll20 blog · Dean Bigbee, Director of Operations, “Performance Update – July 2026” (Jul 29, 2026)"},
+ dean_reddit:{u:"https://www.reddit.com/r/Roll20/comments/1va7roo/performance_issues_the_past_few_weeks/",t:"Reddit r/Roll20 · u/Dean-Bigbee, “Performance Issues the past few weeks” (Jul 29, 2026)"},
+ dean_aug:{u:"https://blog.roll20.net/posts/performance-improvements-and-whats-next/",t:"Roll20 blog · Dean Bigbee, “Performance Improvements and What’s Next” (Aug 5, 2026)"},
+ dean_oct:{u:"https://blog.roll20.net/posts/manage-your-characters-without-opening-the-vtt/",t:"Roll20 blog · Dean Bigbee, “Manage Your Characters Without Opening the VTT” (Oct 5, 2026)"},
+ dean_sep:{u:"https://blog.roll20.net/posts/roll20-dnd-token-maker/",t:"Roll20 blog · Dean Bigbee, “Introducing the Roll20 Token Maker!” (Sep 29, 2026)"},
+ dean_author:{u:"https://blog.roll20.net/posts/author/deanbigbeeroll20/",t:"Roll20 blog · Dean Bigbee author page"},
+ kenton_aug:{u:"https://blog.roll20.net/posts/performance-updates-aug-14-2026/",t:"Roll20 blog · Kenton Hansen, “Performance Updates – Aug 14, 2026”"},
+ kenton_ama:{u:"https://app.roll20.net/forum/post/12220802/ama-ask-me-anything-feb-4th-2025/?pageforid=12220802",t:"Roll20 forum · Kenton, Head of Product, monthly AMA (Feb 4, 2025)"},
+ kenton_cv:{u:"https://kentonhansen.com/resume/",t:"kentonhansen.com · résumé (Roll20 Product Director since May 2018)"},
+ peter_may:{u:"https://blog.roll20.net/posts/roll20-x-demiplane-integration-sheets-now-opening-faster/",t:"Roll20 blog · Peter Romenesko, “Sheets Now Opening Faster” (May 8, 2026)"},
+ peter_apr:{u:"https://blog.roll20.net/posts/roll20-x-demiplane-integration-performance-account-linking-enhancements/",t:"Roll20 blog · Peter Romenesko, “Performance & Account Linking” (Apr 17, 2026)"},
+ peter_forum:{u:"https://forums.demiplane.com/t/performance-sign-in-updates-from-peter-romenesko/6172",t:"Demiplane forums · repost of Peter’s update (Apr 20, 2026)"},
+ peter_jan25:{u:"https://www.demiplane.com/blog/demiplane-x-roll20-integration",t:"Demiplane blog · Peter, “Demiplane x Roll20 Integration” (Jan 28, 2025)"},
+ r20con25:{u:"https://blog.roll20.net/posts/roll20con-2025-round-up/",t:"Roll20 blog · Roll20Con 2025 round-up (Sep 30, 2025): panel with Jeff Lamb, Nicole Brooks, Peter Romenesko"},
+ ama23:{u:"https://app.roll20.net/forum/post/11675450/roll20con-2023-executive-team-ama-nov-3/?pageforid=11675450",t:"Roll20 forum · Roll20Con 2023 Executive Team AMA (Nov 3, 2023): CEO, President, CTO Morgan Buck, VP Tech Mike Todd, CFO Austin Kelly"},
+ theorg:{u:"https://theorg.com/org/roll20/teams/leadership-team",t:"The Org · Roll20 leadership (3rd-party; marked unverified by the site)"},
+ roll2025:{u:"https://blog.roll20.net/posts/roll2025-a-peek-into-roll20s-future-by-ankit-lal-ceo/",t:"Roll20 blog · Ankit Lal (CEO), “Roll2025: A Peek into Roll20’s Future” (Jan 17, 2025)"},
+ pr2022:{u:"https://pressreleases.triplepointpr.com/2022/02/22/roll20-promotes-ankit-lal-to-ceo/",t:"Press release · Roll20 promotes Ankit Lal to CEO (Feb 22, 2022)"},
+ pr_obs:{u:"https://pressreleases.triplepointpr.com/2022/07/13/roll20-and-onebookshelf-joining-forces-gain-5-to-intelligence/",t:"Press release · Roll20 + OneBookShelf join forces (Jul 13, 2022)"},
+ down2021:{u:"https://bloghub.roll20.net/posts/an-update-on-recent-roll20-downtime-from-our-cto/",t:"Roll20 blog · “An Update on Recent Roll20 Downtime from our CTO” (Apr 10, 2021)"},
+ scnsoft:{u:"https://www.scnsoft.com/about/testimonials/onebookshelf",t:"ScienceSoft · OneBookShelf vendor testimonial signed “Mike Todd, CTO” (undated)"},
+ twofa:{u:"https://blog.roll20.net/posts/two-factor-authentication-2fa-is-live-on-roll20/",t:"Roll20 blog · 2FA launch, quote from Sydney Schreckengost, Sr Infrastructure Developer (Oct 22, 2024)"},
+ syd_author:{u:"https://blog.roll20.net/posts/author/sydneyschreckengost/",t:"Roll20 blog · author bio: “Roll20’s resident infrastructure wonk” (they/them)"},
+ breach:{u:"https://bloghub.roll20.net/posts/conclusion-of-2018-data-breach-investigation/",t:"Roll20 blog · “Conclusion of 2018 Data Breach Investigation”, signed Jeffrey Lamb, Data Protection Officer (Aug 12, 2019)"},
+ dd2024:{u:"https://blog.roll20.net/posts/dd-2024-development-update/",t:"Roll20 blog · Nic Bradley, Associate Development Manager, “D&D 2024 Development Update” (Oct 4, 2024)"},
+ discord24:{u:"https://blog.roll20.net/posts/roll20-discord-integration-beta-updates-and-whats-next/",t:"Roll20 blog · Jeff Lamb, Roll20 as a Discord Activity (May 23, 2024)"},
+ jumpgate24:{u:"https://blog.roll20.net/posts/jumpgate-update-beta-open-pro-subs/",t:"Roll20 blog · Riley Dutton, “Jumpgate Update: Beta Open for Pro Subs” (Mar 27, 2024)"},
+ vick24:{u:"https://blog.roll20.net/posts/redesigning-the-dd-2024-compendium/",t:"Roll20 blog · Brittany Vick, “Redesigning the D&D 2024 Compendium” (Aug 6, 2024)"},
+ vick24b:{u:"https://blog.roll20.net/posts/validating-digital-ttrpg-designs-at-roll20/",t:"Roll20 blog · Brittany Vick, “Validating Digital TTRPG Designs” (May 15, 2024)"},
+ cant24:{u:"https://blog.roll20.net/posts/play-dd-2024-your-way-on-roll20/",t:"Roll20 blog · Patrice Cantalupo, “Play D&D 2024 Your Way” (Sep 17, 2024)"},
+ syd_li1:{u:"https://www.linkedin.com/posts/sydney-schreckengost-777b389_feel-like-this-bears-saying-if-you-cold-invite-activity-7505688738312794114-1VP-",t:"LinkedIn post · Sydney Schreckengost (Sep 15, 2026)"},
+ syd_li2:{u:"https://www.linkedin.com/posts/sydney-schreckengost-777b389_i-should-workshop-my-no-silver-bullets-talk-activity-7255748991794008064-x9nH",t:"LinkedIn post · Sydney Schreckengost (Oct 26, 2024)"},
+ syd_li3:{u:"https://www.linkedin.com/posts/sydney-schreckengost-777b389_last-week-i-spent-a-little-bit-of-time-helping-activity-7267025783615799296-8vRS",t:"LinkedIn post · Sydney Schreckengost (Nov 26, 2024)"},
+ rob_li:{u:"https://www.linkedin.com/posts/nicholas-robbins_sr-product-manager-roll20-activity-6874382600354574336-xqfP",t:"LinkedIn post · Nicholas Robbins (Dec 8, 2021)"},
+ rym_li:{u:"https://www.linkedin.com/posts/haleyrymel_google-forms-easily-create-and-analyze-activity-7019376415913443329-paO8",t:"LinkedIn post · Hales Rymel (Jan 12, 2023)"},
+ growjo:{u:"https://growjo.com/company/Roll20",t:"Growjo · Roll20 profile (3rd-party; lists CFO Austin Kelly and Jeffrey Lamb)"},
+ titletown:{u:"https://www.titletowntech.com/post/startup-spotlight-demiplane-qa",t:"TitletownTech · Demiplane startup spotlight (co-founders)"},
+ rum:{u:"https://roll20.net",t:"roll20.net page source (observed Oct 17, 2026): Datadog RUM, service “d20app”, SDK v2.18.0, 5% prod sampling"},
+ sweep:{u:"https://www.linkedin.com/company/roll20",t:"Public LinkedIn sweep of Roll20 employees (82 of 113 profiles; /workspace/roll20)"},
+ dtrpg_jobs:{u:"https://www.drivethrurpg.com/jobs.php",t:"DriveThruRPG jobs page: PHP, MySQL, JIRA"},
+};
+
+/* role keys: EB economic buyer · TDM technical decision maker · CH champion · INF influencer/evaluator · EU end user · BR blocker risk (flag) */
+/* verify: V verified in official source with current role · P partial · L LinkedIn sweep only · D departed */
+const PEOPLE = [
+ {id:"dutton",name:"Riley Dutton",title:"Co-Founder & Board Chairman",lane:"core",tier:0,parent:null,role:"INF",flags:[],verify:"P",
+  li:"https://www.linkedin.com/in/rileydutton/",prod:["RUM","APM"],conf:"Med",
+  why:"Original architect and public face of Project Jumpgate (the 2023–24 engine rebuild). Listed as Founder in Residence on the 2023 exec team; now Board Chairman per LinkedIn. Can lend board-level weight to a reliability investment.",
+  pain:"A decade of coupled VTT features (“nearly a decade of features built on top of it”). Every engine change risks regressions nobody sees.",
+  talk:"“Jumpgate gave you a modern engine. Datadog RUM v7 shows how it actually runs on every player’s device.”",
+  obj:"“That’s an engineering call. Talk to Mike.”",handle:"Agree, and use Riley only as an exec-sponsor touch after Mike is engaged.",
+  posts:[["2024-03-27","Jumpgate beta opened to Pro subscribers; engine modernization roadmap","jumpgate24"]],
+  src:["ama23","jumpgate24","sweep"]},
+ {id:"ankit",name:"Ankit Lal",title:"Chief Executive Officer",lane:"core",tier:0,parent:"dutton",role:"EB",flags:[],verify:"V",
+  li:"https://www.linkedin.com/in/ankit-l-06b2ab26/",prod:["IM","CCM"],conf:"High",
+  why:"Final signatory on a multi-product platform commitment. Ex-Google/ClassPass; CEO since Feb 2022. His Jan 2025 letter says the company “rebuilt our foundations.” Reliability now directly protects subscriber LTV, with public cancellations in the CTO thread.",
+  pain:"Churn risk on game night versus Foundry (one-time licence) and Fantasy Grounds (now free). The headline user count has been flat at “15M+” since 2024, so retention is the growth lever.",
+  talk:"“Mike committed publicly to Fix → Instrument → Automate. Here is what that is worth in retained Pro and Elite subscribers per avoided Friday-night incident.”",
+  obj:"“We already pay Datadog for RUM. Why is this suddenly a bigger line item?”",handle:"Frame it as consolidation (Pingdom, replay tools) plus a churn-avoided ROI, phased by product.",
+  posts:[["2025-01-17","“Roll2025” CEO letter: 2024 recap (Demiplane deal, VTT overhaul, 2FA) and 2025 priorities","roll2025"],["2023-11-03","Exec AMA: says 2020–21 Covid traffic forced a rewrite of older infrastructure","ama23"]],
+  src:["pr2022","ama23","roll2025","kenton_ama","sweep"]},
+ {id:"wieck",name:"Steve Wieck",title:"President, Roll20 (founder of OneBookShelf / DriveThruRPG)",lane:"dtrpg",tier:0,parent:null,role:"EB",flags:[],verify:"V",
+  li:"https://www.linkedin.com/in/steve-wieck-a6a36b2/",prod:["APM","DBM","IM"],conf:"High",
+  why:"Hands-on president. He personally answers forum complaints about the Demiplane integration and help-desk failures, and he thinks in effort-versus-impact terms: “if A is 2x more annoying but 10x the engineering time, we do B first.” Joined the board and exec team in the 2022 OneBookShelf deal; Mike Todd came up under him at DriveThruRPG.",
+  pain:"Three platforms with “distinct product and dev teams”; Demiplane integration backlash; the help desk “couldn’t reproduce” user issues.",
+  talk:"“You said prioritization is annoyance versus engineering effort. Datadog shrinks the time-to-diagnose part of that equation across Roll20, DriveThruRPG and Demiplane.”",
+  obj:"“Engineering time is our constraint, not tooling. Another rollout competes with the roadmap.”",handle:"Show a Helm-installed Agent and an SDK swap measured in days, not sprints.",
+  posts:[["2026-03-11","CTO thread: asks users for top Demiplane pain points; sheet-caching fix and cross-platform login in flight","cto_note"],["2026-03-12","CTO thread: explains how fixes are prioritized by annoyance versus engineering effort; apologizes for help-desk miss","cto_note"],["2023-11-03","Exec AMA: plans to migrate Roll20 Marketplace onto the DriveThruRPG codebase","ama23"]],
+  src:["cto_note","pr_obs","ama23","sweep"]},
+ {id:"kelly",name:"Austin Kelly",title:"Chief Financial Officer",lane:"core",tier:1,parent:"ankit",role:"EB",flags:["BR"],verify:"P",
+  li:"https://www.linkedin.com/in/austin-kelly-9674086a",prod:["CCM","LOGS"],conf:"Med",
+  why:"Owns budget for the expansion. Roll20 is bootstrapped and profitable (COO, 2021), so the deal will be bought on ROI. The multi-cloud bill (GCP, AWS, Cloudflare, Fastly, Firebase) is in flux during migrations.",
+  pain:"Tool sprawl (Pingdom, Inspectlet, Clarity) and unpredictable cloud spend while infrastructure moves.",
+  talk:"“Fold Pingdom and the session-replay tools into the Datadog contract you already have, and get Cloud Cost Management across GCP and AWS during the migration.”",
+  obj:"“Datadog is known for surprise overage bills. How do we cap spend?”",handle:"Committed-use contract, usage attribution and Flex Logs; show the estimated-usage dashboard.",
+  posts:[],
+  src:["ama23","theorg","growjo"]},
+ {id:"todd",name:"Mike Todd",title:"CTO / Head of Engineering (ex-CTO DriveThruRPG; at OBS since 2004)",lane:"core",tier:1,parent:"ankit",role:"TDM",flags:["CH"],verify:"V",
+  li:"https://www.linkedin.com/in/miketodd13/",prod:["INFRA","APM","LOGS","WA","SYN","RUM","IM"],conf:"High",
+  why:"The decision-maker, and in his own words he is already selling Datadog’s value: “Fix it → Instrument it → Automate it.” On May 20 he said detection was “mostly done, but we could have been better” and self-healing is “next.” He names Kubernetes pod memory creep into swap and is weighing a move off Cloudflare, back to AWS and away from Firebase. Buying style: signed a ScienceSoft testimonial praising “very good value for our money” and a shift from fixed-scope to T&M, so he is a pragmatic, referenceable vendor buyer. The Datadog RUM tag dates from 2021, before he was CTO (VP Technology in 2023), so this is effectively a new evaluation for him.",
+  pain:"“Internal bugs and external outages happen concurrently, making them a nightmare to disentangle.” Plus “luck of the draw” issues that depend on which pod you hit.",
+  talk:"“Step 2 is ‘Instrument it’ and step 3 is ‘Automate it.’ Datadog does both on the platform you already run RUM on: Watchdog on pod memory and swap, then Workflow Automation to cordon or restart before players notice.”",
+  obj:"“We’re mid-migration (Cloudflare, AWS, Firebase). We’ll revisit tooling once the architecture settles.”",handle:"Migrations are when you most need a vendor-neutral baseline: the same dashboards before and after each cutover.",
+  posts:[["2026-01-31","Forum letter: Cloudflare and Firebase instability, K8s pod memory creep, Fix → Instrument → Automate","cto_note"],["2026-03-12","Forum follow-up: team structure, D&D sheet density, public roadmaps released","cto_note"],["2026-04-08","Blog: VTT memory leak, upload pipeline, Firebase sheet-sync rewrite, DriveThruRPG SSR and problem queries","perf_apr"],["2026-05-20","Reddit (u/Roll20Mike): autoscaled servers came up broken at peak; detection “could have been better”","reddit_may"],["undated","ScienceSoft testimonial: values “good value for our money”; moved from fixed-scope to T&M","scnsoft"]],
+  src:["cto_note","perf_apr","reddit_may","scnsoft","ama23","sweep"]},
+ {id:"bigbee",name:"Dean Bigbee",title:"Director of Operations",lane:"core",tier:1,parent:"ankit",role:"CH",flags:[],verify:"V",
+  li:"https://www.linkedin.com/in/deanbigbee/",prod:["IM","SYN","RUM","DBM"],conf:"High",
+  why:"Became the public voice of the summer 2026 performance incident: “Our data confirms a small but meaningful dip…”, posted with a service-health chart. He wrote the Jul 29 and Aug 5 incident posts (Compendium Service timeouts behind the Jul 18–19 downtime, database-query fixes, slow monitored rollouts). He is also Roll20’s most prolific 2026 blog author on launches, so he sits exactly where product launches meet reliability.",
+  pain:"New marketplace launches added compendium data that degraded performance for about two weeks before the root cause was found. No working public status page (status.roll20.net did not resolve).",
+  talk:"“When you wrote ‘our data confirms a small but meaningful dip,’ Datadog SLOs and Status Pages could have shown that to players live, and flagged it on launch day instead of two weeks later.”",
+  obj:"“I’m not the tooling buyer. That’s Mike’s team.”",handle:"Ask him to co-sponsor: he owns the outcome (player comms and launch risk); Mike owns the tool.",
+  posts:[["2026-10-05","Blog: manage characters without opening the VTT (QoL launch)","dean_oct"],["2026-09-29","Blog: Roll20 Token Maker launch","dean_sep"],["2026-08-05","Blog: Compendium Service fix, DB query optimizations, Phase 1 sheet rollout monitored","dean_aug"],["2026-07-29","Blog and Reddit: “our data confirms a small but meaningful dip” performance update","dean_reddit"]],
+  src:["dean_jul","dean_reddit","dean_aug","dean_author","sweep"]},
+ {id:"hansen",name:"Kenton Hansen",title:"Head of Product (Roll20 since 2018)",lane:"core",tier:1,parent:"ankit",role:"INF",flags:[],verify:"V",
+  li:null,prod:["RUM","ERR","SYN"],conf:"High",
+  why:"Personally triaged player reports in Aug 2026 (“I’ve been personally working with many players and GMs”). Already argues from telemetry: on May 6 he cited “99.4% are using [Performance Enhancements] without issue.” Built Roll20’s product org; his résumé claims churn was cut in half.",
+  pain:"Issues visible only from the “on the ground” view (specific character builds, large games), which a 5% RUM sample mostly misses.",
+  talk:"“You said some issues only show up ‘on the ground.’ 100% RUM with Session Replay on large games is that view, without asking players to file tickets.”",
+  obj:"“We already have session replay (Inspectlet or Clarity).”",handle:"Replay linked to backend traces and errors is what turns a recording into a root cause.",
+  posts:[["2026-08-14","Blog: roll lag and token-bar fixes, Phase 1 at 100% of games, new Compendium Service on roadmap","kenton_aug"],["2026-05-06","Reddit (u/Kentonh): 99.4% adoption stat; Voice/Video scaling bug fixed","reddit_may6"],["2025-02-04","Forum: kicks off monthly AMA series as Head of Product","kenton_ama"]],
+  src:["kenton_ama","kenton_aug","reddit_may6","kenton_cv"]},
+ {id:"romenesko",name:"Peter Romenesko",title:"Founder-in-Residence · Demiplane team lead (co-founder, ex-CEO)",lane:"demi",tier:1,parent:"ankit",role:"TDM",flags:[],verify:"V",
+  li:"https://www.linkedin.com/in/peterromenesko/",prod:["APM","RUM","SYN"],conf:"High",
+  why:"Owns the most-criticized surface. Users say the integration “created 2 points of failure.” He publishes hand-measured load times (a PF2e sheet went from ~78s to 4–5s, “up to 90% faster”) and calls his own test “pretty un-scientific.” Stack: Next.js on CloudFront, Hasura GraphQL and Cognito, with no Datadog tag seen. His co-founder and CTO, Travis Frederick, left in Jan 2026.",
+  pain:"Cross-platform login and sheet load and sync across two systems; continuous proof of improvement.",
+  talk:"“You measured 78s → 4s by hand. RUM on app.demiplane.com plus one trace from the Roll20 VTT through Hasura gives you that number for every sheet and every system, all the time.”",
+  obj:"“Demiplane has its own stack and roadmap. We’re not standardizing on Roll20’s tooling yet.”",handle:"Start with one cross-platform trace (VTT → Demiplane sheet) rather than a migration.",
+  posts:[["2026-05-08","Blog: Demiplane sheets open up to 90% faster in the VTT (load-time table)","peter_may"],["2026-04-20","Demiplane forums: repost of performance and sign-in update","peter_forum"],["2026-04-17","Blog: frictionless Roll20 login live; load-time work kicked off Nov 2025","peter_apr"],["2025-09","Roll20Con 2025 panel with Jeff Lamb and Nicole Brooks","r20con25"]],
+  src:["peter_apr","peter_may","peter_jan25","r20con25","cto_note","sweep"]},
+ {id:"monk",name:"Benjamin Monk Jr.",title:"Controller",lane:"core",tier:2,parent:"kelly",role:"INF",flags:[],verify:"L",
+  li:"https://www.linkedin.com/in/benjamin-monk-jr-a914b612/",prod:["CCM"],conf:"Low",
+  why:"Likely runs POs, invoices and usage true-ups under the CFO. Involve him early on contract structure.",
+  pain:"Forecasting usage-based billing.",talk:"“Committed-use pricing with usage alerts, so finance never sees a surprise.”",
+  obj:"“Usage-based billing is impossible to forecast.”",handle:"Show usage attribution and monthly estimates.",posts:[],src:["sweep"]},
+ {id:"lamb",name:"Jeff Lamb",title:"Software Development Director (VTT) · former Data Protection Officer",lane:"core",tier:2,parent:"todd",role:"TDM",flags:["CH"],verify:"V",
+  li:"https://www.linkedin.com/in/jeffrey-lamb-21348a51/",prod:["RUM","APM","ERR","CI"],conf:"High",
+  why:"Day-to-day technical owner of the VTT. Wrote the Jan 2026 deep-dive (draw calls cut from 3,000 to under 100 per frame with Babylon.js instancing). He depends on players to report if “anything feels off,” and says gains vary “depending on hardware.” He signed the 2019 breach report as Data Protection Officer, so he gatekeeps RUM and Replay privacy.",
+  pain:"No field-level view of FPS, GPU memory or atlas build time by device at 5% sampling.",
+  talk:"“Your draw-call work is measurable in the field. RUM v7 custom vitals for FPS and atlas build time, per device, at 100% on big maps.”",
+  obj:"“Session Replay is a privacy problem for our users’ data.”",handle:"Default privacy masking (mask-user-input), no PII, EU/US data-site choice.",
+  posts:[["2026-01-20","Blog: “How we 10x’d VTT performance” (instancing, texture atlas)","jeff_10x"],["2025-09","Roll20Con 2025 panel on the year’s VTT releases","r20con25"],["2024-05-23","Blog: Roll20 as a Discord Activity beta","discord24"]],
+  src:["jeff_10x","perf_apr","breach","r20con25","growjo","sweep"]},
+ {id:"bradley",name:"Nic Bradley",title:"Software Engineering Manager (D&D 2024 sheet / Beacon)",lane:"core",tier:2,parent:"todd",role:"INF",flags:["CH"],verify:"P",
+  li:"https://www.linkedin.com/in/nic-bradley-110412112/",prod:["APM","ERR","RUM","CI"],conf:"Med",
+  why:"Led the D&D 2024 sheet and builder (Oct 2024 post). That sheet’s multi-user sync is “the top priority for our back-end engineers.” Each edit pushes the whole sheet to Firebase, and Phase 1/2 rollouts are being “closely monitored.”",
+  pain:"Concurrency bugs that only appear with several users on the same sheet; roll lag from oversized character data.",
+  talk:"“Phase 2 is a perfect canary. Tag RUM sessions by rollout cohort and trace each sheet-sync call end to end to Firebase.”",
+  obj:"“We built our own monitoring for the sheet rollout phases.”",handle:"Keep it, and add cohort-level latency with no extra code.",
+  posts:[["2024-10-04","Blog: D&D 2024 development update (upcasting, roadmap)","dd2024"]],
+  src:["dd2024","cto_note","perf_apr","sweep"]},
+ {id:"dkelly",name:"Domenic Kelly",title:"Head of Game Engines & Mechanics",lane:"core",tier:2,parent:"todd",role:"INF",flags:[],verify:"L",
+  li:"https://www.linkedin.com/in/domenic-kelly/",prod:["APM","RUM"],conf:"Low",
+  why:"The rules and automation engine (D&D 2024 automations, builder) is where Aug 2026 roll lag came from (“some character builds carry significantly more data”).",
+  pain:"Data-heavy builds slow rolls and calculations.",talk:"“Profile the roll pipeline per character build so heavy builds are caught before players notice.”",
+  obj:"“Our bottleneck is data modelling, not observability.”",handle:"Profiler data tells you which model to fix first.",posts:[],src:["kenton_aug","sweep"]},
+ {id:"hubbard",name:"Conrad Hubbard",title:"QA Manager",lane:"core",tier:2,parent:"todd",role:"INF",flags:[],verify:"L",
+  li:"https://www.linkedin.com/in/conradhubbard/",prod:["SYN","CI"],conf:"Low",
+  why:"Owns QA. In 2021 Roll20 admitted it “underestimated just how difficult it can be to test features that touch our VTT.”",
+  pain:"Regressions that only show under multi-player load.",talk:"“Synthetic browser tests on the top 5 game-night journeys, run every 5 minutes.”",
+  obj:"“QA budget goes to headcount, not tools.”",handle:"Synthetics replaces manual smoke runs before each release.",posts:[],src:["sweep","down2021"]},
+ {id:"vick",name:"Brittany Vick",title:"Associate Director of Product Design (“head designer”)",lane:"core",tier:2,parent:"hansen",role:"INF",flags:[],verify:"V",
+  li:"https://www.linkedin.com/in/brittany-vick-b50508175/",prod:["RUM"],conf:"Med",
+  why:"Mike Todd calls her “our head designer.” She answers UI backlash directly and vets designs with “Lab Rats” on Discord, so Session Replay and frustration signals could inform her design decisions.",
+  pain:"Navigation changes that frustrate long-time users; mobile and tablet density.",talk:"“Rage clicks and dead clicks on the new nav, quantified per release.”",
+  obj:"“We already validate designs with Lab Rats on Discord.”",handle:"Replay covers the 99% who never join Discord.",
+  posts:[["2026-03","CTO thread reply: fixed the Messages icon placement after user feedback","cto_note"],["2024-08-06","Blog: redesigning the D&D 2024 Compendium","vick24"],["2024-05-15","Blog: validating digital TTRPG designs","vick24b"]],
+  src:["cto_note","vick24","sweep"]},
+ {id:"lavi",name:"Lavi (surname not public)",title:"Product Manager, VTT team",lane:"core",tier:3,parent:"hansen",role:"INF",flags:[],verify:"V",
+  li:null,prod:["RUM"],conf:"Med",
+  why:"Wrote the Apr 2026 VTT performance post: about 10x fewer draw calls and 40 → ~150 FPS on a 2022 MacBook Air. She is “working with this small group of users to chase down the few lingering edge cases.” Reddit u/LaviRoll20.",
+  pain:"Finding the small group with problems by hand.",talk:"“RUM finds that small group for you: segment FPS and long tasks by device and by the Performance toggle.”",
+  obj:"“Discord and the feedback form give us enough signal.”",handle:"Self-reported signal is biased toward vocal users.",
+  posts:[["2026-04-23","Blog: VTT performance (draw calls, FPS, uploads, in-game guidance)","vtt_apr"]],src:["vtt_apr","reddit_may6"]},
+ {id:"cantalupo",name:"Patrice Cantalupo",title:"Senior Product Manager & BI Analyst",lane:"core",tier:3,parent:"hansen",role:"INF",flags:[],verify:"P",
+  li:"https://www.linkedin.com/in/patrice-cantalupo/",prod:["RUM","LOGS"],conf:"Low",
+  why:"Combines PM and BI (D&D 2024 launch posts), so likely the consumer of any product-analytics data from RUM.",
+  pain:"Joining behavioral data with performance.",talk:"“RUM product analytics: feature adoption joined to performance in one place.”",
+  obj:"“We already have GA4 and Tableau for analytics.”",handle:"Complement, don’t replace: performance-aware funnels.",
+  posts:[["2024-09-17","Blog: Play D&D 2024 your way on Roll20","cant24"]],src:["cant24","sweep"]},
+ {id:"procise",name:"Miles Procise",title:"Senior Manager, Customer Support",lane:"core",tier:2,parent:"bigbee",role:"INF",flags:[],verify:"P",
+  li:"https://www.linkedin.com/in/miles-procise-3252b595/",prod:["RUM","IM"],conf:"Med",
+  why:"Steve Wieck names him as the one who confirmed a bug and took it to the platform team (Mar 2026). Other users got a “canned” reply saying the issue “couldn’t [be] reproduce[d].” Every 2026 perf post asks players to send game links in tickets.",
+  pain:"Can’t reproduce intermittent, load-dependent issues.",talk:"“Attach the player’s actual session replay to the Zendesk ticket instead of asking for a game link.”",
+  obj:"“Support doesn’t own engineering tools.”",handle:"Zendesk-side value with read-only seats.",posts:[],src:["cto_note","sweep"]},
+ {id:"schreck",name:"Sydney Schreckengost (they/them)",title:"Senior Infrastructure Developer",lane:"core",tier:3,parent:"todd",role:"EU",flags:["BR"],verify:"V",
+  li:"https://www.linkedin.com/in/sydney-schreckengost-777b389",prod:["INFRA","LOGS","WA","APM","SYN"],conf:"High",
+  why:"“Roll20’s resident infrastructure wonk” (blog bio). Helm, autoscaling and microservices skills; designed the 2FA approach (Oct 2024). Most likely the person who would install the Agent and owns the autoscaling path that broke on May 20. BLOCKER RISK: on Sep 15, 2026 they posted that vendors who cold-invite them get their company “round-file[d]” (6 reactions). They also pitch a “No Silver Bullets” talk.",
+  pain:"Autoscaled nodes coming up broken at peak; pod memory creep into swap.",
+  talk:"(Only through a Mike Todd intro, never a cold calendar invite.) “Not a silver bullet, just a Helm chart: the Agent plus Kubernetes state metrics on the node pool that broke May 20, one cluster, two weeks.”",
+  obj:"“Tools don’t fix process. There are no silver bullets.”",handle:"Agree. Lead with their runbook; Datadog just automates step 2 and step 3.",
+  posts:[["2026-09-15","LinkedIn: will “round-file” vendors who send cold calendar invites","syd_li1"],["2024-11-26","LinkedIn: mentoring community members into tech jobs","syd_li3"],["2024-10-26","LinkedIn: wants to re-submit their “No Silver Bullets” talk","syd_li2"],["2024-10-22","Blog: quoted on Roll20’s 2FA security design","twofa"]],
+  src:["syd_author","twofa","syd_li1","reddit_may","sweep"]},
+ {id:"robbins",name:"Nicholas Robbins",title:"Senior Software Developer (Ruby/Padrino, Helm, K8s, CI/CD)",lane:"core",tier:3,parent:"lamb",role:"EU",flags:[],verify:"L",
+  li:"https://www.linkedin.com/in/nicholas-robbins/",prod:["APM","CI","INFRA"],conf:"Med",
+  why:"Ruby/Padrino matches Roll20’s GitHub forks; also Helm, Kubernetes, CircleCI and GitHub Actions. A natural hands-on evaluator for ddtrace-rb and CI Visibility.",
+  pain:"Tracing a Sinatra/Padrino monolith across autoscaled pods.",talk:"“ddtrace on Padrino/Rack in one line, with CircleCI and GitHub Actions pipelines in the same view.”",
+  obj:"“Ruby tracer overhead on our Rack stack is unknown.”",handle:"Benchmark it in staging (already 100% RUM).",
+  posts:[["2021-12-08","LinkedIn: “Come work for Roll20!” (Sr PM job share). No recent public posts found.","rob_li"]],src:["sweep","rob_li"]},
+ {id:"rymel",name:"Hales Rymel",title:"QA Automation Engineer / Assoc. QA Manager",lane:"core",tier:3,parent:"hubbard",role:"CH",flags:[],verify:"L",
+  li:"https://www.linkedin.com/in/haleyrymel/",prod:["SYN","CI","RUM"],conf:"Med",
+  why:"The only person among the 82 profiles swept who lists Datadog as a skill, alongside CircleCI, Cypress and Firebase. Likely hands-on with today’s RUM (staging runs at 100% sampling), which makes them the natural internal coach and first contact for a RUM health check.",
+  pain:"Bugs that “only appear when there are a number of players in the game” (forum).",talk:"“Turn your Cypress flows into Datadog Synthetic browser tests: login → join game → open sheet, every 5 minutes before Friday 7 PM ET.”",
+  obj:"“We already run Cypress in CircleCI. Why pay for Synthetics?”",handle:"Same flows, run from 10 regions in production, tied to RUM and APM.",
+  posts:[["2023-01-12","LinkedIn: “Roll20 is hiring a new QA Engineer!” No recent public posts found.","rym_li"]],src:["sweep","rym_li","cto_note"]},
+ {id:"roberts",name:"Jason Roberts",title:"Lead Engineer (Babylon.js / WebGL, AWS)",lane:"core",tier:3,parent:"lamb",role:"INF",flags:[],verify:"L",
+  li:"https://www.linkedin.com/in/jason-roberts-64593330/",prod:["RUM","ERR"],conf:"Low",
+  why:"Babylon.js, Three.js, GLSL, AWS Lambda and DynamoDB skills suggest Jumpgate engine work [inference]. The CTO is still “keeping alert” for “WebGL Context Lost” errors.",
+  pain:"GPU and WebGL failures invisible from the backend.",talk:"“RUM Error Tracking groups ‘WebGL context lost’ by GPU, browser and map, so you can prove the K8s fix closed it.”",
+  obj:"“Browser RUM can’t see GPU-level problems.”",handle:"Custom errors and vitals from the render loop.",posts:[],src:["sweep","cto_note"]},
+ {id:"brooks",name:"Nicole Brooks",title:"Sheet Developer / Senior Developer",lane:"core",tier:3,parent:"lamb",role:"EU",flags:[],verify:"V",
+  li:"https://www.linkedin.com/in/nicole-brooks-3464aa55/",prod:["RUM","ERR"],conf:"Med",
+  why:"Spoke on the Roll20Con 2025 VTT panel as Sheet Developer. Sheet load, sync and memory leaks (“2x to 4x larger leak” on legacy sheets) are the hottest 2026 issues.",
+  pain:"Memory leaks per sheet open; sheet load time.",talk:"“Memory and long-task vitals per sheet type, so the legacy-sheet leak fix shows up on a graph.”",
+  obj:"“Sheets run sandboxed. RUM can’t see inside them.”",handle:"Custom actions from Beacon sheet code.",
+  posts:[["2025-09","Roll20Con 2025 panel: the year’s biggest VTT and sheet releases","r20con25"]],src:["r20con25","perf_apr","sweep"]},
+ {id:"early",name:"Douglas Early",title:"Sr. Software Development Manager",lane:"dtrpg",tier:2,parent:"todd",role:"INF",flags:[],verify:"L",
+  li:"https://www.linkedin.com/in/douglasearly/",prod:["APM","DBM","LOGS"],conf:"Low",
+  why:"PHP, PostgreSQL, Docker, RabbitMQ and DevOps/CI-CD skills match the DriveThruRPG stack (PHP, Symfony, MySQL, Docker). DriveThruRPG is moving from SPA to SSR and hunting “problem queries” (Apr 2026). Lane is inferred.",
+  pain:"Slow queries; regressions during the SSR migration.",talk:"“Database Monitoring shows the exact ‘problem queries’ Mike mentioned, with explain plans, before and after each SSR release.”",
+  obj:"“MySQL slow-query logs already cover this.”",handle:"DBM adds explain plans, waits and the APM trace link.",posts:[],src:["sweep","perf_apr","dtrpg_jobs"]},
+ {id:"hood",name:"Sarah Hood",title:"Senior Software Developer (PHP / MySQL / Symfony)",lane:"dtrpg",tier:3,parent:"early",role:"EU",flags:[],verify:"L",
+  li:"https://www.linkedin.com/in/sarahehood/",prod:["APM","DBM"],conf:"Low",
+  why:"PHP, MySQL, Symfony and Drupal skills match the DriveThruRPG codebase [lane inferred]. A likely hands-on evaluator for the PHP tracer and DBM.",
+  pain:"Legacy PHP marketplace code paths.",talk:"“The PHP tracer auto-instruments Symfony; no code changes for the first traces.”",
+  obj:"“Adding a tracer to legacy PHP is risky.”",handle:"Enable it on one canary host first.",posts:[],src:["sweep","dtrpg_jobs"]},
+ {id:"frederick",name:"Travis Frederick",title:"Demiplane co-founder & CTO → Founder in Residence (left Jan 2026)",lane:"demi",tier:2,parent:"romenesko",role:"EU",flags:[],verify:"D",
+  li:"https://www.linkedin.com/in/travis-frederick/",prod:["APM"],conf:"Med",
+  why:"DEPARTED, shown for context. Demiplane’s technical co-founder left in Jan 2026, so knowledge of its infrastructure (Next.js, Hasura, Cognito on AWS) now has to be absorbed by Roll20 engineering. That is a consolidation and onboarding window for shared observability.",
+  pain:"n/a (departed)",talk:"Don’t contact. Use the departure as a discovery question for Peter: “Who owns Demiplane infrastructure on-call today?”",
+  obj:"n/a (departed)",handle:"",posts:[],src:["sweep","titletown"]},
+];
+const ALSO = [
+ ["Valerie Dvinova","Product (VP Product Mgmt & Partnerships), LinkedIn only; not seen in Roll20 sources","https://www.linkedin.com/in/valerie-dvinova-b5401689/"],
+ ["Chris McDonough","Founder in Residence (Product/Project Mgmt); The Org + LinkedIn; GTM/HubSpot/Adobe Analytics skills","https://www.linkedin.com/in/chrismcdonough3/"],
+ ["Jayme Boucher","Sr Product Marketing Manager, VTT & Dungeon Scrawl (blog bio); feature-launch voice","https://www.linkedin.com/in/jaymeboucher/"],
+ ["Olivia Kristiansen","Associate Development Manager, LinkedIn only","https://www.linkedin.com/in/olivia-kristiansen-b1916012a/"],
+ ["David Herald","Sr Software Developer (Kubernetes, Node, Vue), LinkedIn only","https://www.linkedin.com/in/david-herald-719733a0/"],
+ ["Jacob Parma","Senior Engineer (Next.js, AWS, Terraform), LinkedIn only; possible Demiplane-stack overlap","https://www.linkedin.com/in/jacobparma/"],
+ ["Sarah Tachibana","Developer, VTT (Babylon.js), LinkedIn only","https://www.linkedin.com/in/sarah-tachibana-75626897/"],
+ ["Ian Howard","Senior Developer (MySQL, Redis), LinkedIn only","https://www.linkedin.com/in/ian-howard-ab859237/"],
+ ["Jenn Garcia","Director of HR, not in the deal path","https://www.linkedin.com/in/jenn-garcia-053a41158/"],
+ ["Corey Rosemond","Former COO, now advisory board (The Org); not in the deal path","https://www.linkedin.com/in/crose/"],
+ ["Morgan Buck","CTO in the 2023 exec AMA; not in the 2026 roster, so presumed departed (unverified). The 2021 RUM tag dates from this era",null],
+];
+
+const ROLES={EB:["Economic Buyer","var(--EB)"],TDM:["Technical Decision Maker","var(--TDM)"],CH:["Champion","var(--CH)"],INF:["Influencer / Evaluator","var(--INF)"],EU:["End User","var(--EU)"],BR:["Blocker risk","var(--BR)"]};
+const PRODS={RUM:"RUM v7 + Session Replay",APM:"APM & Distributed Tracing",INFRA:"Infrastructure & Kubernetes",LOGS:"Log Management",SYN:"Synthetics",DBM:"Database Monitoring",IM:"Incident Mgmt / On-Call / Status Pages",CCM:"Cloud Cost Management",ERR:"Error Tracking",CI:"CI Visibility / Test Optimization",WA:"Workflow Automation (auto-heal)"};
+const VER={V:["✓","Verified: official Roll20/Demiplane source, 2025–26"],P:["◐","Partially verified: official source + LinkedIn title"],L:["in","LinkedIn sweep only (self-reported)"],D:["×","Departed"]};
+const LANES=[["core","Roll20 core platform","VTT · Sheets · Compendium · Ops"],["dtrpg","DriveThruRPG / OneBookShelf","PHP · MySQL · AWS"],["demi","Demiplane","Next.js · Hasura · CloudFront"]];
+const TIERS=["Board & CEO","Executive team","Directors & managers","Practitioners / ICs"];
+const byId=Object.fromEntries(PEOPLE.map(p=>[p.id,p]));
+const ini=n=>n.replace(/\(.*?\)/g,'').trim().split(/\s+/).filter(w=>/^[A-Z]/.test(w)).slice(0,2).map(w=>w[0]).join('');
+const rc=r=>ROLES[r][1];
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
+// KPIs
+const nV=PEOPLE.filter(p=>p.verify=="V").length,nP=PEOPLE.filter(p=>p.verify=="P").length;
+document.getElementById('kpis').innerHTML=[[PEOPLE.length,"people on map"],[3,"business lanes"],["5%","RUM sampling today"]].map(k=>`<div class="kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('');
+// chips
+const state={role:null,prod:null,v:false};
+document.getElementById('roleChips').innerHTML=Object.entries(ROLES).map(([k,v])=>`<span class="chip" data-role="${k}"><i class="dot" style="background:${v[1]}"></i>${v[0]}</span>`).join(' ');
+document.getElementById('prodChips').innerHTML=Object.entries(PRODS).map(([k,v])=>`<span class="chip" data-prod="${k}" title="${v}">${k=="INFRA"?"Infra/K8s":k=="IM"?"Incident/Status":k=="WA"?"Auto-heal":k=="CI"?"CI Vis.":k=="ERR"?"Errors":k}</span>`).join(' ');
+// grid
+const g=document.getElementById('grid');let h='<div></div>'+LANES.map(l=>`<div class="lanehead">${l[1]}<small>${l[2]}</small></div>`).join('');
+TIERS.forEach((t,ti)=>{h+=`<div class="tierlab">${t}</div>`;LANES.forEach((l,li)=>{const ps=PEOPLE.filter(p=>p.tier==ti&&p.lane==l[0]);h+=`<div class="cell l${li}">${ps.map(card).join('')}</div>`})});
+g.innerHTML=h;
+function card(p){const r=p.role;const tags=[`<span class="tag" style="background:${rc(r)}">${r=="TDM"?"Tech DM":r=="INF"?"Influencer":r=="EU"?"End user":r=="EB"?"Econ. buyer":"Champion"}</span>`].concat(p.flags.map(f=>`<span class="tag" style="background:${rc(f)}">${f=="BR"?"Blocker risk":"Champion"}</span>`)).join('');
+return `<div class="card ${p.verify=="D"?"dep":""}" id="c-${p.id}" data-id="${p.id}"><div class="face"><div class="rtop" style="background:${rc(r)}"></div><div class="vb v${p.verify}" title="${VER[p.verify][1]}">${VER[p.verify][0]}</div><div class="av" style="background:${rc(r)}">${ini(p.name)}</div><div class="nm">${esc(p.name.replace(/ \(.*\)/,''))}</div><div class="tt">${esc(p.title)}</div><div class="tags">${tags}</div></div></div>`}
+// wires
+function wires(){const st=document.getElementById('stage').getBoundingClientRect();const svg=document.getElementById('wires');let s='';
+PEOPLE.forEach(p=>{if(!p.parent)return;const a=document.getElementById('c-'+p.parent),b=document.getElementById('c-'+p.id);if(!a||!b)return;const A=a.getBoundingClientRect(),B=b.getBoundingClientRect();
+const x1=A.left+A.width/2-st.left,y1=A.bottom-st.top,x2=B.left+B.width/2-st.left,y2=B.top-st.top;const my=(y1+y2)/2;const cross=byId[p.parent].lane!=p.lane||p.parent=="dutton";
+s+=`<path data-a="${p.parent}" data-b="${p.id}" class="${cross?'x':''}" d="M${x1},${y1} C${x1},${my} ${x2},${my} ${x2},${y2}"/>`});svg.innerHTML=s}
+window.addEventListener('load',wires);window.addEventListener('resize',wires);setTimeout(wires,300);
+// legend
+document.getElementById('legend').innerHTML=`<b>Legend</b>`+Object.entries(ROLES).map(([k,v])=>`<span class="lg"><i class="dot" style="background:${v[1]}"></i>${v[0]}</span>`).join('')+
+`<span class="lg"><span class="vb vV" style="position:static">✓</span>verified</span><span class="lg"><span class="vb vP" style="position:static">◐</span>partial</span><span class="lg"><span class="vb vL" style="position:static">in</span>LinkedIn only</span><span class="lg"><span class="vb vD" style="position:static">×</span>departed</span><span class="lg"><i class="ln"></i>inferred reporting line</span><span class="lg"><i class="ln x"></i>cross-lane / board</span>`;
+// filters
+function apply(){PEOPLE.forEach(p=>{const el=document.getElementById('c-'+p.id);let ok=true,any=state.role||state.prod||state.v;
+if(state.role)ok=ok&&(p.role==state.role||p.flags.includes(state.role));if(state.prod)ok=ok&&p.prod.includes(state.prod);if(state.v)ok=ok&&p.verify=="V";
+el.classList.toggle('dim',any&&!ok);el.classList.toggle('hit',!!(any&&ok))});
+document.querySelectorAll('#wires path').forEach(w=>{const a=document.getElementById('c-'+w.dataset.a),b=document.getElementById('c-'+w.dataset.b);w.classList.toggle('dim',a.classList.contains('dim')||b.classList.contains('dim'))});
+document.querySelectorAll('[data-role]').forEach(c=>c.classList.toggle('on',c.dataset.role==state.role));document.querySelectorAll('[data-prod]').forEach(c=>c.classList.toggle('on',c.dataset.prod==state.prod));document.getElementById('vonly').classList.toggle('on',state.v)}
+document.querySelectorAll('[data-role]').forEach(c=>c.onclick=()=>{state.role=state.role==c.dataset.role?null:c.dataset.role;apply()});
+document.querySelectorAll('[data-prod]').forEach(c=>c.onclick=()=>{state.prod=state.prod==c.dataset.prod?null:c.dataset.prod;apply()});
+document.getElementById('vonly').onclick=()=>{state.v=!state.v;apply()};document.getElementById('reset').onclick=()=>{state.role=state.prod=null;state.v=false;apply()};
+// hover highlight lines
+document.querySelectorAll('.card').forEach(c=>{c.onmouseenter=()=>document.querySelectorAll(`#wires path[data-a="${c.dataset.id}"],#wires path[data-b="${c.dataset.id}"]`).forEach(w=>w.classList.add('hl'));c.onmouseleave=()=>document.querySelectorAll('#wires path.hl').forEach(w=>w.classList.remove('hl'));c.onclick=()=>openCard(c.dataset.id)});
+// flip overlay
+const ov=document.getElementById('ov'),fl=document.getElementById('flip');
+function srcLink(k){const s=SRC[k];return s?`<a href="${s.u}" target="_blank" rel="noopener">${esc(s.t)}</a>`:k}
+function fmtDate(d){if(d=="undated")return"Undated";const m=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];const [y,mo,da]=d.split('-');return (mo?m[+mo-1]+" ":"")+(da?(+da)+", ":"")+y}
+function openCard(id,instant){const p=byId[id];const col=rc(p.role);
+const tagHtml=[p.role].concat(p.flags).map(r=>`<span class="tag" style="background:${rc(r)};font-size:11px;padding:3px 9px">${ROLES[r][0]}</span>`).join(' ');
+document.getElementById('fFront').innerHTML=`<div class="av" style="background:${col}">${ini(p.name)}</div><div style="font-size:30px;font-weight:800">${esc(p.name)}</div><div style="color:var(--mut);font-size:16px">${esc(p.title)}</div><div>${tagHtml}</div>`;
+const posts=p.posts.length?p.posts.map(x=>`<li><span class="dt">${fmtDate(x[0])}</span> ${esc(x[1])} · <a href="${SRC[x[2]].u}" target="_blank" rel="noopener">link ↗</a></li>`).join(''):`<li><i>No recent public posts found.</i></li>`;
+document.getElementById('fBack').innerHTML=`<div class="bh" style="background:linear-gradient(110deg,${p.verify=="D"?"#6b6380":"#3D1670"},${col})"><div class="av" style="background:rgba(255,255,255,.18)">${ini(p.name)}</div><div><h2>${esc(p.name)}</h2><div class="t2">${esc(p.title)} · ${LANES.find(l=>l[0]==p.lane)[1]}</div><div style="margin-top:6px">${tagHtml} <span class="tag" style="background:rgba(255,255,255,.2)">${VER[p.verify][1]}</span></div></div><div class="sp"></div>${p.li?`<a class="btn" href="${p.li}" target="_blank" rel="noopener">in LinkedIn ↗</a>`:`<span class="btn ghost" title="No LinkedIn URL found in any source">No LinkedIn URL in sources</span>`}<button class="btn ghost" onclick="closeCard()">✕ Close</button></div>
+<div class="bb"><div><div class="box"><h4>Why they matter to Datadog</h4><p>${esc(p.why)}</p></div><div class="box"><h4>Likely pain</h4><p>${esc(p.pain)}</p></div>
+<div class="box"><h4>Sources · confidence <span class="conf c${p.conf[0]}">${p.conf}</span></h4><ul class="srcs">${p.src.map(k=>`<li>• ${srcLink(k)}</li>`).join('')}</ul></div></div>
+<div><div class="box"><h4>Recommended Datadog products</h4><div class="pchips">${p.prod.map(k=>`<span class="pc">${PRODS[k]}</span>`).join('')}</div></div><div class="box quote"><h4>Opening talk track</h4><p>${esc(p.talk)}</p></div><div class="box obj"><h4>Most-likely objection</h4><p><b>${esc(p.obj)}</b></p>${p.handle?`<p style="margin-top:6px;font-size:12px;color:#5a4f6e"><b>Handle:</b> ${esc(p.handle)}</p>`:''}</div></div>
+<div><div class="box" style="height:calc(100% - 12px)"><h4>Recent public posts &amp; activity</h4><ul class="posts">${posts}</ul></div></div></div>`;
+ov.classList.add('show');if(instant){fl.style.transition='none';fl.classList.add('f');fl.offsetHeight;fl.style.transition=''}else{fl.classList.remove('f');requestAnimationFrame(()=>requestAnimationFrame(()=>fl.classList.add('f')))}}
+function closeCard(){fl.classList.remove('f');setTimeout(()=>ov.classList.remove('show'),500)}
+ov.onclick=e=>{if(e.target===ov||e.target.classList.contains('big'))closeCard()};document.addEventListener('keydown',e=>{if(e.key=="Escape")closeCard()});
+// entry path
+const PATH=[
+ ["Step 0 · Homework","Mine the existing footprint","Before any outreach, pull the d20app org’s RUM usage and admin users from the account team. Expect Hales Rymel (the only Datadog-skilled employee) and VTT engineers. Do not send cold calendar invites; Sydney has said publicly they’ll “round-file” vendors who do.",["rymel","schreck"]],
+ ["Step 1 · Email first","Mike Todd, CTO","Subject: “Step 2 of Fix → Instrument → Automate.” Three bullets tied to his own posts: the Jan 31 pod memory creep, the May 20 autoscaling failure (“detection could have been better”) and the 2021-era RUM SDK at 5%. Ask: a 30-minute observability gap review of May 20.",["todd"]],
+ ["Step 2 · Value first","RUM health check","Offer a no-cost RUM review to Jeff Lamb and Hales Rymel: SDK v2.18 → v7, 5% → retention filters at 100%, Session Replay with privacy masking (pre-empts Jeff’s DPO lens). This creates the internal coach.",["lamb","rymel"]],
+ ["Step 3 · Multithread","Owners of each pain","Nic Bradley (sheet sync → APM), Dean Bigbee (SLOs and Status Pages for launch-day dips), Kenton Hansen (replay of what’s visible only “on the ground”), Peter Romenesko (VTT ↔ Demiplane tracing), Douglas Early (DTRPG problem queries → DBM).",["bradley","bigbee","hansen","romenesko","early"]],
+ ["Step 4 · Prove & close","POC → business case","2-week POC on one Kubernetes cluster with Sydney, via Mike’s intro: Helm Agent, K8s monitoring, Watchdog on pod memory, one auto-heal workflow. Then a consolidation and churn-avoided case for Austin Kelly and Ankit Lal, with Steve Wieck as sponsor for the DTRPG and Demiplane scope.",["schreck","kelly","ankit","wieck"]]];
+document.getElementById('path').innerHTML=PATH.map(s=>`<div class="step"><div class="k">${s[0]}</div><h5>${s[1]}</h5><p>${s[2]}</p><div class="who">${s[3].filter(i=>byId[i]).map(i=>`<span onclick="openCard('${i}')">${byId[i].name.replace(/ \(.*\)/,'')}</span>`).join('')}</div></div>`).join('');
+// matrix
+const MX=[["High power · likely supporter","Mike Todd (TDM/Champion), Jeff Lamb, Peter Romenesko (Demiplane scope)"],["High power · neutral / ROI-gated","Ankit Lal, Steve Wieck, Austin Kelly (cost = blocker risk)"],["Medium power · likely supporter","Dean Bigbee, Kenton Hansen, Nic Bradley, Hales Rymel (coach)"],["Hands-on veto","Sydney Schreckengost (blocker risk if mishandled; advocate if the POC respects their process)"],["Users & evaluators","Robbins, Roberts, Brooks, Lavi, Vick, Cantalupo, Procise, Early, Hood, Hubbard"]];
+document.getElementById('mx').innerHTML='<tr><th>Quadrant</th><th>Who</th></tr>'+MX.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td></tr>`).join('');
+document.getElementById('also').innerHTML=ALSO.map(a=>`<div>• <b>${esc(a[0])}</b>: ${esc(a[1])}${a[2]?` · <a href="${a[2]}" target="_blank" rel="noopener">LinkedIn</a>`:''}</div>`).join('');
+document.getElementById('ev').innerHTML=Object.values(SRC).map(s=>`<div>• <a href="${s.u}" target="_blank" rel="noopener">${esc(s.t)}</a></div>`).join('');
+// deep link: #flip=id
+const m=location.hash.match(/flip=([\w-]+)/);if(m&&byId[m[1]])setTimeout(()=>openCard(m[1],true),400);
+const f=location.hash.match(/role=(\w+)/);if(f){state.role=f[1];apply()}
+</script></body></html>
