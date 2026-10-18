@@ -67,7 +67,7 @@ svg#wires path.dim{opacity:.12}svg#wires path.hl{stroke:var(--p);stroke-width:2.
 .bh .sp{flex:1}
 .btn{display:inline-flex;align-items:center;gap:6px;background:#fff;color:var(--p);font-weight:700;border-radius:999px;padding:7px 14px;text-decoration:none;font-size:12px;border:0;cursor:pointer}
 .btn.ghost{background:rgba(255,255,255,.16);color:#fff;border:1px solid rgba(255,255,255,.4)}
-.bb{flex:1;display:grid;grid-template-columns:1.15fr 1fr 1.05fr;gap:16px;padding:16px 22px 18px;overflow:auto}
+.bb{flex:1;display:grid;grid-template-columns:1.25fr 1fr;align-content:start;gap:16px;padding:16px 22px 18px;overflow:auto}
 .box{background:var(--bg);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:12px}
 .box h4{margin:0 0 6px;font-size:10.5px;text-transform:uppercase;letter-spacing:.1em;color:var(--p);font-weight:800}
 .box p{margin:0;line-height:1.5;font-size:12.8px}
@@ -113,7 +113,7 @@ footer a{color:var(--p)}
 </div><div class="kpis" id="kpis"></div></div></header>
 <div class="bar">
  <div class="grp"><span class="lab">Deal role</span><span id="roleChips"></span></div>
- <div class="grp"><span class="lab">Datadog product</span><span id="prodChips"></span></div>
+
  <div class="grp"><span class="chip" id="vonly">✓ Verified only</span><span class="chip reset" id="reset">Reset</span></div>
 </div>
 <div class="stage" id="stage"><svg id="wires"></svg><div class="grid" id="grid"></div></div>
@@ -387,7 +387,7 @@ document.getElementById('kpis').innerHTML=[[PEOPLE.length,"people on map"],[3,"b
 // chips
 const state={role:null,prod:null,v:false};
 document.getElementById('roleChips').innerHTML=Object.entries(ROLES).map(([k,v])=>`<span class="chip" data-role="${k}"><i class="dot" style="background:${v[1]}"></i>${v[0]}</span>`).join(' ');
-document.getElementById('prodChips').innerHTML=Object.entries(PRODS).map(([k,v])=>`<span class="chip" data-prod="${k}" title="${v}">${k=="INFRA"?"Infra/K8s":k=="IM"?"Incident/Status":k=="WA"?"Auto-heal":k=="CI"?"CI Vis.":k=="ERR"?"Errors":k}</span>`).join(' ');
+(document.getElementById('prodChips')||{}).innerHTML=Object.entries(PRODS).map(([k,v])=>`<span class="chip" data-prod="${k}" title="${v}">${k=="INFRA"?"Infra/K8s":k=="IM"?"Incident/Status":k=="WA"?"Auto-heal":k=="CI"?"CI Vis.":k=="ERR"?"Errors":k}</span>`).join(' ');
 // grid
 const g=document.getElementById('grid');let h='<div></div>'+LANES.map(l=>`<div class="lanehead">${l[1]}<small>${l[2]}</small></div>`).join('');
 TIERS.forEach((t,ti)=>{h+=`<div class="tierlab">${t}</div>`;LANES.forEach((l,li)=>{const ps=PEOPLE.filter(p=>p.tier==ti&&p.lane==l[0]);h+=`<div class="cell l${li}">${ps.map(card).join('')}</div>`})});
@@ -425,7 +425,6 @@ const posts=p.posts.length?p.posts.map(x=>`<li><span class="dt">${fmtDate(x[0])}
 document.getElementById('fBack').innerHTML=`<div class="bh" style="background:linear-gradient(110deg,${p.verify=="D"?"#6b6380":"#3D1670"},${col})"><div class="av" style="background:rgba(255,255,255,.18)">${ini(p.name)}</div><div><h2>${esc(p.name)}</h2><div class="t2">${esc(p.title)} · ${LANES.find(l=>l[0]==p.lane)[1]}</div><div style="margin-top:6px">${tagHtml} <span class="tag" style="background:rgba(255,255,255,.2)">${VER[p.verify][1]}</span></div></div><div class="sp"></div>${p.li?`<a class="btn" href="${p.li}" target="_blank" rel="noopener">in LinkedIn ↗</a>`:`<span class="btn ghost" title="No LinkedIn URL found in any source">No LinkedIn URL in sources</span>`}${CONTACT[p.id]?`<a class="btn" href="${CONTACT[p.id].wa}" target="_blank" rel="noopener" title="Opens WhatsApp to Marlon (demo) with a prefilled opener">WhatsApp (demo) ↗</a>`:""}<button class="btn ghost" onclick="closeCard()">✕ Close</button></div>${cxHtml(p.id)}
 <div class="bb"><div><div class="box"><h4>Why they matter to Datadog</h4><p>${esc(p.why)}</p></div><div class="box"><h4>Likely pain</h4><p>${esc(p.pain)}</p></div>
 <div class="box"><h4>Sources · confidence <span class="conf c${p.conf[0]}">${p.conf}</span></h4><ul class="srcs">${p.src.map(k=>`<li>• ${srcLink(k)}</li>`).join('')}</ul></div></div>
-<div><div class="box"><h4>Recommended Datadog products</h4><div class="pchips">${p.prod.map(k=>`<span class="pc">${PRODS[k]}</span>`).join('')}</div></div><div class="box quote"><h4>Opening talk track</h4><p>${esc(p.talk)}</p></div><div class="box obj"><h4>Most-likely objection</h4><p><b>${esc(p.obj)}</b></p>${p.handle?`<p style="margin-top:6px;font-size:12px;color:#5a4f6e"><b>Handle:</b> ${esc(p.handle)}</p>`:''}</div></div>
 <div><div class="box" style="height:calc(100% - 12px)"><h4>Recent public posts &amp; activity</h4><ul class="posts">${posts}</ul></div></div></div>`;
 ov.classList.add('show');if(instant){fl.style.transition='none';fl.classList.add('f');fl.offsetHeight;fl.style.transition=''}else{fl.classList.remove('f');requestAnimationFrame(()=>requestAnimationFrame(()=>fl.classList.add('f')))}}
 function closeCard(){fl.classList.remove('f');setTimeout(()=>ov.classList.remove('show'),500)}
