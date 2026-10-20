@@ -112,7 +112,7 @@ footer a{color:var(--p)}
 <body>
 <header><div class="hrow"><div>
 <h1>Key Stakeholders &amp; Power Map</h1>
-</div><div class="kpis" id="kpis"></div></div></header>
+</div></div></header>
 <div class="bar">
  <div class="grp"><span class="lab">Deal role</span><span id="roleChips"></span></div>
 
@@ -121,17 +121,6 @@ footer a{color:var(--p)}
 <div class="stage" id="stage"><svg id="wires"></svg><div class="grid" id="grid"></div></div>
 <div class="legend" id="legend"></div>
 
-<section><h3><span class="n">1</span>Recommended entry path</h3><div class="path" id="path"></div></section>
-<section style="padding-top:4px"><div class="two">
- <div class="panel"><h3 style="font-size:15px">Power vs. support matrix (my read)</h3><table class="mx" id="mx"></table></div>
- <div class="panel"><h3 style="font-size:15px">Why this map is credible</h3><ul>
-  <li><b>Roster first:</b> the org chart comes from a public LinkedIn sweep of Roll20 employees (82 of 113 profiles). I then <b>verified</b> people against Roll20 blog bylines (WordPress author API), forum and Reddit staff posts, Demiplane posts and press releases.</li>
-  <li><b>Verification badges:</b> <span class="vb vV" style="position:static;display:inline-flex">✓</span> named with role in an official source, 2025–26 · <span class="vb vP" style="position:static;display:inline-flex">◐</span> official source confirms the person, title from LinkedIn or an older source · <span class="vb vL" style="position:static;display:inline-flex">in</span> LinkedIn sweep only · <span class="vb vD" style="position:static;display:inline-flex">×</span> departed.</li>
-  <li><b>Reporting lines are inferred</b> from titles and public statements; Roll20 publishes no org chart. Lanes marked “inferred” (DriveThruRPG engineers) rest on stack-skill matches.</li>
-  <li><b>Signals that matter:</b> the only Datadog-skilled employee (Hales Rymel) is the internal coach. The infra owner (Sydney) has publicly warned vendors off cold invites, so enter top-down via the CTO. Demiplane lost its CTO co-founder in Jan 2026.</li>
-  <li>No ZoomInfo or Crustdata used. Nobody contacted. Only LinkedIn URLs found in sources are linked.</li></ul></div>
-</div></section>
-<section style="padding-top:4px"><div class="panel"><h3 style="font-size:15px">Also mapped (low deal relevance or unverified)</h3><div id="also" class="mini" style="columns:3;column-gap:24px;line-height:1.6"></div></div></section>
 <footer><b style="color:var(--ink)">Evidence</b> (all public; accessed Oct 17–18, 2026 ET). <div class="cols" id="ev"></div>
 <p>Compiled for a Datadog Commercial AE account plan. Dates are as published. Quotes are verbatim from linked sources. “[inference]” marks my analysis rather than a sourced fact.</p></footer>
 
@@ -385,7 +374,6 @@ const rc=r=>ROLES[r][1];
 const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;');
 // KPIs
 const nV=PEOPLE.filter(p=>p.verify=="V").length,nP=PEOPLE.filter(p=>p.verify=="P").length;
-document.getElementById('kpis').innerHTML=[[PEOPLE.length,"people on map"],[3,"business lanes"],["5%","RUM sampling today"]].map(k=>`<div class="kpi"><b>${k[0]}</b><span>${k[1]}</span></div>`).join('');
 // chips
 const state={role:null,prod:null,v:false};
 document.getElementById('roleChips').innerHTML=Object.entries(ROLES).map(([k,v])=>`<span class="chip" data-role="${k}"><i class="dot" style="background:${v[1]}"></i>${v[0]}</span>`).join(' ');
@@ -438,11 +426,8 @@ const PATH=[
  ["Step 2 · Value first","RUM health check","Offer a no-cost RUM review to Jeff Lamb and Hales Rymel: SDK v2.18 → v7, 5% → retention filters at 100%, Session Replay with privacy masking (pre-empts Jeff’s DPO lens). This creates the internal coach.",["lamb","rymel"]],
  ["Step 3 · Multithread","Owners of each pain","Nic Bradley (sheet sync → APM), Dean Bigbee (SLOs and Status Pages for launch-day dips), Kenton Hansen (replay of what’s visible only “on the ground”), Peter Romenesko (VTT ↔ Demiplane tracing), Douglas Early (DTRPG problem queries → DBM).",["bradley","bigbee","hansen","romenesko","early"]],
  ["Step 4 · Prove & close","POC → business case","2-week POC on one Kubernetes cluster with Sydney, via Mike’s intro: Helm Agent, K8s monitoring, Watchdog on pod memory, one auto-heal workflow. Then a consolidation and churn-avoided case for Austin Kelly and Ankit Lal, with Steve Wieck as sponsor for the DTRPG and Demiplane scope.",["schreck","kelly","ankit","wieck"]]];
-document.getElementById('path').innerHTML=PATH.map(s=>`<div class="step"><div class="k">${s[0]}</div><h5>${s[1]}</h5><p>${s[2]}</p><div class="who">${s[3].filter(i=>byId[i]).map(i=>`<span onclick="openCard('${i}')">${byId[i].name.replace(/ \(.*\)/,'')}</span>`).join('')}</div></div>`).join('');
 // matrix
 const MX=[["High power · likely supporter","Mike Todd (TDM/Champion), Jeff Lamb, Peter Romenesko (Demiplane scope)"],["High power · neutral / ROI-gated","Ankit Lal, Steve Wieck, Austin Kelly (cost = blocker risk)"],["Medium power · likely supporter","Dean Bigbee, Kenton Hansen, Nic Bradley, Hales Rymel (coach)"],["Hands-on veto","Sydney Schreckengost (blocker risk if mishandled; advocate if the POC respects their process)"],["Users & evaluators","Robbins, Roberts, Brooks, Lavi, Vick, Cantalupo, Procise, Early, Hood, Hubbard"]];
-document.getElementById('mx').innerHTML='<tr><th>Quadrant</th><th>Who</th></tr>'+MX.map(r=>`<tr><td><b>${r[0]}</b></td><td>${r[1]}</td></tr>`).join('');
-document.getElementById('also').innerHTML=ALSO.map(a=>`<div>• <b>${esc(a[0])}</b>: ${esc(a[1])}${a[2]?` · <a href="${a[2]}" target="_blank" rel="noopener">LinkedIn</a>`:''}</div>`).join('');
 document.getElementById('ev').innerHTML=Object.values(SRC).map(s=>`<div>• <a href="${s.u}" target="_blank" rel="noopener">${esc(s.t)}</a></div>`).join('');
 // deep link: #flip=id
 const m=location.hash.match(/flip=([\w-]+)/);if(m&&byId[m[1]])setTimeout(()=>openCard(m[1],true),400);
